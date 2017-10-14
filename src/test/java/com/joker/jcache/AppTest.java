@@ -13,6 +13,8 @@ import javax.sql.DataSource;
 
 import org.junit.Test;
 
+import com.joker.jcache.bean.Bean;
+import com.joker.jcache.bean.BeanContainer;
 import com.joker.jcache.condition.Condition;
 import com.joker.jcache.factory.CacheSingleton;
 import com.joker.jcache.list.ListBeanContainer;
@@ -280,6 +282,16 @@ public class AppTest {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	@Test
+	public void testsfdfgdfgfd() {
+		CacheSingleton<User> cacheSingleton = CacheSingleton.getInstance();
+		BeanContainer<User> beanContainer = cacheSingleton.getBeanContainer(User.class);
+		User user = new User();
+		Bean<User> bean = new Bean<>();
+		bean.setBean(user);
+		beanContainer.setBean(bean, user.getUserid());
 	}
 	
 }
