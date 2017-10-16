@@ -14,6 +14,10 @@
 		<id>Jokerblazes-support</id>
 		<url>https://raw.github.com/Jokerblazes/maven-project/master/com</url>
 	</repository>
+	<repository>
+		<id>JokerBuffer</id>
+		<url>https://raw.github.com/Jokerblazes/maven-project/master/com</url>
+	</repository>
 </repositories>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -48,6 +52,11 @@
 		</dependency>
 		<dependency>
       <artifactId>support</artifactId>
+      <groupId>com.joker</groupId>
+      <version>0.0.1-SNAPSHOT</version>
+    </dependency>
+    <dependency>
+     <artifactId>JokerBuffer</artifactId>
       <groupId>com.joker</groupId>
       <version>0.0.1-SNAPSHOT</version>
     </dependency>

@@ -6,6 +6,7 @@ import java.lang.reflect.Method;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.joker.buffer.factory.BufferLinkFactory;
 import com.joker.jcache.bean.Bean;
 import com.joker.jcache.bean.BeanContainer;
 import com.joker.jcache.common.Invocation;
@@ -22,6 +23,14 @@ import com.joker.jcache.factory.CacheSingleton;
 public class DeleteRule<T> implements StrategyRule {
 	
 	private static final Logger logger = LoggerFactory.getLogger(DeleteRule.class); 
+	
+	private boolean asynchronous = false;
+
+	public void setAsynchronous(boolean asynchronous) {
+		this.asynchronous = asynchronous;
+	}
+
+
 	@Override
 	public Object saveOrGetFromCache(Invocation invocation, CacheSingleton cacheSingleton, Condition condition) {
 		Object dao = invocation.getController();
@@ -29,11 +38,16 @@ public class DeleteRule<T> implements StrategyRule {
 		BeanContainer<T> beanContainer = cacheSingleton.getBeanContainer(invocation.getController().getClass());
 		Object result = null;
 		Object[] args = invocation.getArgs();
-		//执行数据库操作
-		try {
-			result = method.invoke(dao, invocation.getArgs());
-		} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-			e.printStackTrace();
+		if (asynchronous == false) {
+			//执行数据库操作
+			try {
+				result = method.invoke(dao, invocation.getArgs());
+			} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+				e.printStackTrace();
+			}
+		} else {
+			BufferLinkFactory.readObject(invocation);
+			result = 1;
 		}
 		int number = ReflectionUtils.getCacheObjectNumberFromMethod(method);
 		if (number == -1) 

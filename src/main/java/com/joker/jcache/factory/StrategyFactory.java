@@ -6,6 +6,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.joker.buffer.factory.BufferLinkFactory;
 import com.joker.jcache.annoation.Cache.OperateType;
 import com.joker.jcache.rule.DeleteRule;
 import com.joker.jcache.rule.InsertRule;
@@ -36,6 +37,19 @@ public class StrategyFactory {
 		ruleMap.put(OperateType.SELECT, new SelectRule<>());
 		logger.info("初始化StrategyFactory完成！");
 	}
+	
+	public static void initAsynchronousDeleteRule(int size,int limit,Class strategyClass) {
+		BufferLinkFactory.initBufferList(size, limit, strategyClass);
+		DeleteRule rule = (DeleteRule) ruleMap.get(OperateType.DELETE);
+		rule.setAsynchronous(true);
+	}
+	
+	public static void initAsynchronousUpdateRule(int size,int limit,Class strategyClass) {
+		BufferLinkFactory.initBufferList(size, limit, strategyClass);
+		UpdateRule rule = (UpdateRule) ruleMap.get(OperateType.UPDATE);
+		rule.setAsynchronous(true);
+	}
+	
 	/**
 	 * 
 	 * @param length(@Cache注解中value数组的长度)
