@@ -4,6 +4,7 @@ import java.lang.reflect.Proxy;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Vector;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
@@ -293,5 +294,51 @@ public class AppTest {
 		bean.setBean(user);
 		beanContainer.setBean(bean, user.getUserid());
 	}
+	
+	@Test
+	public void testfdgfgf() {
+		List<String> ss = new Vector<>();
+		ss.add("1");
+		ss.add("2");
+		ss.add("3");
+		ss.add("4");
+		ss.add("5");
+		ss.add("6");
+		Runnable runnable1 = new Runnable() {
+			@Override
+			public void run() {
+				while (ss.size() != 0) {
+					System.out.println("get:"+Thread.currentThread()+ss.get(0));
+				}
+			}
+		};
+		Runnable runnable2 = new Runnable() {
+			@Override
+			public void run() {
+				int i = 0;
+				while(true) {
+					i++;
+					if (i>=ss.size())
+						break;
+					System.out.println("remove:"+Thread.currentThread()+ss.remove(i));
+				}
+//				for (String string : ss) {
+//					System.out.println("remove:"+Thread.currentThread()+ss.remove(string));
+//				}
+//				while (ss.size() != 0)
+//					System.out.println("remove:"+Thread.currentThread()+ss.remove(0));
+			}
+		};
+		Thread a = new Thread(runnable1);
+		Thread b = new Thread(runnable2);
+		a.start();
+		b.start();
+//		try {
+//			Thread.sleep(3000);
+//		} catch (InterruptedException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+	} 
 	
 }

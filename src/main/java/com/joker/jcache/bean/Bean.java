@@ -5,7 +5,7 @@ import com.joker.jcache.condition.Condition;
 public class Bean<T> {
 	private T bean;
 	private Condition condition;//条件
-	
+	private volatile int flag;
 	
 	public T getBean() {
 		return bean;
@@ -18,6 +18,12 @@ public class Bean<T> {
 	}
 	public void setCondition(Condition condition) {
 		this.condition = condition;
+	}
+	public int getFlag() {
+		return flag;
+	}
+	public void setFlag(int flag) {
+		this.flag = flag;
 	}
 	
 }

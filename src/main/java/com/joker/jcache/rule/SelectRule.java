@@ -10,9 +10,11 @@ import org.slf4j.LoggerFactory;
 
 import com.joker.jcache.bean.Bean;
 import com.joker.jcache.bean.BeanContainer;
+import com.joker.jcache.common.Constant;
 import com.joker.jcache.common.Invocation;
 import com.joker.jcache.common.ReflectionUtils;
 import com.joker.jcache.condition.Condition;
+import com.joker.jcache.elimination.EliminationStrategy;
 import com.joker.jcache.factory.CacheSingleton;
 import com.joker.jcache.list.ListBean;
 import com.joker.jcache.list.ListBeanContainer;
@@ -62,7 +64,12 @@ public class SelectRule<T> implements StrategyRule {
 			}
 			logger.info("组装成BeanList {}",list);
 			beanContainer.setResourceName(result.getClass().getName());
-			beanContainer.setBean(list,keyList);
+//			EliminationStrategy strategy = cacheSingleton.getEliminationStrategy(dao.getClass());
+//			if (strategy.isNeedEliminate(beanContainer)) {
+//				strategy.eliminate(beanContainer);
+//			}
+//			strategy.addBeans(list);
+			beanContainer.setBeans(list,keyList);
 			logger.info("存储到bean容器中!");
 		} else {
 			logger.info("缓存命中!");
@@ -70,6 +77,7 @@ public class SelectRule<T> implements StrategyRule {
 			List<Bean<T>> list = listBean.getBeans();
 			logger.info("缓存中的beanList {}",list);
 			for (Bean<T> bean : list) {
+				bean.setFlag(Constant.BUSY_STATE);
 				actualList.add(bean.getBean());
 			}
 			result = actualList;

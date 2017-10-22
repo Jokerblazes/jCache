@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import com.joker.buffer.factory.BufferLinkFactory;
 import com.joker.jcache.bean.Bean;
 import com.joker.jcache.bean.BeanContainer;
+import com.joker.jcache.common.Constant;
 import com.joker.jcache.common.Invocation;
 import com.joker.jcache.common.ReflectionUtils;
 import com.joker.jcache.condition.Condition;
@@ -56,6 +57,7 @@ public class UpdateRule<T> implements StrategyRule {
 		if (bean != null) {
 			logger.info("缓存命中,更新前 {}",bean);
 			bean.setBean(object);
+			bean.setFlag(Constant.BUSY_STATE);
 			logger.info("缓存命中,更新后 {}",bean);
 		}
 		return result;

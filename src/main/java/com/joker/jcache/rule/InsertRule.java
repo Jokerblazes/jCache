@@ -13,9 +13,11 @@ import org.slf4j.LoggerFactory;
 
 import com.joker.jcache.bean.Bean;
 import com.joker.jcache.bean.BeanContainer;
+import com.joker.jcache.common.Constant;
 import com.joker.jcache.common.Invocation;
 import com.joker.jcache.common.ReflectionUtils;
 import com.joker.jcache.condition.Condition;
+import com.joker.jcache.elimination.EliminationStrategy;
 import com.joker.jcache.factory.CacheSingleton;
 import com.joker.jcache.list.ListBeanContainer;
 import com.joker.support.connection.TransactionUtil;
@@ -61,6 +63,12 @@ public class InsertRule<T> implements StrategyRule {
 			if (ReflectionUtils.compareComditionAndObject(args[number], temp)) {
 				logger.info("符合条件 {}",temp);
 				bean.setCondition(temp);
+				bean.setFlag(Constant.BUSY_STATE);
+//				EliminationStrategy strategy = cacheSingleton.getEliminationStrategy(dao.getClass());
+//				if (strategy.isNeedEliminate(beanContainer)) {
+//					strategy.eliminate(beanContainer);
+//				}
+//				strategy.addBean(bean);
 				beanContainer.setBean(bean,key);
 				beanContainer.setResourceName(result.getClass().getName());
 			}

@@ -12,6 +12,7 @@ import com.joker.jcache.bean.BeanContainer;
 import com.joker.jcache.common.Invocation;
 import com.joker.jcache.common.ReflectionUtils;
 import com.joker.jcache.condition.Condition;
+import com.joker.jcache.elimination.EliminationStrategy;
 import com.joker.jcache.factory.CacheSingleton;
 
 /**
