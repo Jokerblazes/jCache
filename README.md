@@ -49,6 +49,7 @@ CacheSingleton<User> cacheSingleton = CacheSingleton.getInstance();
 		bean.setBean(user);
 		beanContainer.setBean(bean, user.getUserid());
 ```
+this is V2
 
 
 
